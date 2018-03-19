@@ -11,8 +11,12 @@
         [tmp,idx] = sort(dist);              % find nearest neighbors over Xtrain (dimension 2)
                                             % idx(1) is the index of the nearest point, etc.; see help sort
 
-        error('You should write prediction code here');
-        Yte(i)=something_you_write();       % predict ith test example's value from nearest neighbors
-
+        cMax=1; NcMax=0;                    % then find the majority class within that set of neighbors
+        for c=1:length(classes),
+          Nc = avg(obj.Ytrain(idx(1:K))==classes(c));  % average up how many instances of that class we have
+          if (Nc>NcMax), cMax=c; NcMax=Nc; end;        % save the largest count and its class id
+        end;
+                                  
+        Yte(i)=classes(cMax);       % predict ith test example's value from nearest neighbors
       end;
     end
