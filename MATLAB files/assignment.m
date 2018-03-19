@@ -68,12 +68,14 @@ fprintf('The MSE for the quintic linear predictor was: %.2f (training data), %.2
 
 % Create a list of K values
 Ks = [1, 2, 3, 5, 10, 50];
+[Nte, ~] = size(Xtr);
+knnXte = repmat(Xtr(1), [Nte,1]);
 
 % Create and learn a kNN regression predictor from the data Xtr, ytr for each K.
 for i=1:size(Ks)
     learner = knnRegress(Ks(i), Xtr, ytr);
-
-    yhat = predict(learner, Xtr);
+    
+    yhat = predict(learner, knnXte);
     
     % Plot newly created linear predictor output at x new points.
     xline = [0:.01:2]' ; % Transpose

@@ -13,7 +13,7 @@
 
         cMax=1; NcMax=0;                    % then find the majority class within that set of neighbors
         for c=1:length(classes),
-          Nc = avg(obj.Ytrain(idx(1:K))==classes(c));  % average up how many instances of that class we have
+          Nc = mean(obj.Ytrain(idx(1:K))==classes(c));  % average up how many instances of that class we have
           if (Nc>NcMax), cMax=c; NcMax=Nc; end;        % save the largest count and its class id
         end;
                                   
