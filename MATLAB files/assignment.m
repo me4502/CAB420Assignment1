@@ -2,7 +2,7 @@
 %
 % Authors: 
 % - Jarrod Williams, n9722068
-% - Madeline Miller, nXXXXXXX
+% - Madeline Miller, n9342401
 % 
 %
 %% 1. Features, Classes, and Linear Regression
@@ -66,8 +66,26 @@ fprintf('The MSE for the quintic linear predictor was: %.2f (training data), %.2
 
 %% 2. kNN Regression
 
+% Create a list of K values
+Ks = [1, 2, 3, 5, 10, 50];
 
+% Create and learn a kNN regression predictor from the data Xtr, ytr for each K.
+for i=1:size(Ks)
+    learner = knnRegress(Ks(i), Xtr, ytr);
 
+    yhat = predict(learner, Xtr);
+    
+    % Plot newly created linear predictor output at x new points.
+    xline = [0:.01:2]' ; % Transpose
+    yline = predict(learner, polyx(xline, 2)); % Assuming quadratic features
+    figure('name', 'Quadratic linear predictor');
+    plot(xline, yline, 'ro');
+
+    % Plot training data and label figure.
+    hold on
+    plot (xtr, ytr, 'bo'); % Plot training data
+    legend('Linear Predictor', 'Training Data');
+end
 
 %% 3. Hold-out and Cross-validation
 
