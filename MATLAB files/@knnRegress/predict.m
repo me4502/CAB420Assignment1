@@ -13,10 +13,10 @@
 
         cMax=1; NcMax=0;                    % then find the majority class within that set of neighbors
         for c=1:length(classes),
-          Nc = mean(obj.Ytrain(idx(1:K))==classes(c));  % average up how many instances of that class we have
+          Nc = sum(obj.Ytrain(idx(1:K))==classes(c))/K;  % average up how many instances of that class we have
           if (Nc>NcMax), cMax=c; NcMax=Nc; end;        % save the largest count and its class id
         end;
                                   
-        Yte(i)=classes(cMax);       % predict ith test example's value from nearest neighbors
+        Yte(i)=classes(cMax)/K;       % predict ith test example's value from nearest neighbors
       end;
     end
