@@ -32,6 +32,7 @@ plot(xline, yline, 'ro');
 hold on
 plot (xtr, ytr, 'bo'); % Plot training data
 legend('Linear Predictor', 'Training Data');
+title('Quadratic linear predictor');
 
 % Calculate Mean Squared Error (MSE) for quadratic model using training data.
 mseQuadTrain = immse(yhat, ytr);
@@ -54,6 +55,7 @@ plot ( xline , yline ,'ro ');
 hold on
 plot (xtr, ytr, 'bo');
 legend('Linear Predictor', 'Training Data');
+title('Quintic linear predictor');
 mseQuinTrain = immse(yhat, ytr); % Calculate MSE for training data
 Xtest = polyx(xtest, 5); % Calculate MSE for test data
 learner = linearReg(Xtest, ytest);
@@ -119,17 +121,21 @@ for colour = 1:length(colours)
     pointsY = points(1:end, 2);
     scatter(pointsX, pointsY, [], scatterColour, 'filled');
 end
+legend('Class 0', 'Class 1', 'Class 2');
+title('Feature Values of Iris Dataset');
 hold off;
 
 % (B) Learn and plot 1-nearest-neighbour predictor
 learner = knnClassify(1, X, Y);
 class2DPlot(learner,X,Y);
+title('1-nearest-neighbour predictor');
 
 % (C) Repeat for several values of k
 kValues = [3,10,30]; % k=1 is already plotted above in (B).
 for index = 1:length(kValues)
     learner = knnClassify(kValues(index), X, Y);
     class2DPlot(learner,X,Y);
+    title(strcat(int2str(kValues(index)), '-nearest-neighbour predictor'));
 end
 
 % (D) Split data into training (80%) and valuation (20%) data. Train and 
@@ -149,8 +155,88 @@ for index = 1:length(kValues)
 end
 
 figure('Name','Performace of k'); % Plot performance of k against error
-plot(kValues, errors,'-x')
+plot(kValues, errors,'-o')
+title('Performance of k against error rate');
+xlabel('Value of k')
+ylabel('Number of data points classified incorrectly') % y-axis label
 
 
-% 5. Perceptrons and Logistic Regression
+
+
+
+%% 5. Perceptrons and Logistic Regression
+
+
+iris = load('data/iris.txt'); % load the text file
+X = iris(:, 1:2); Y = iris(:, end); % get first two features
+[X Y] = shuffleData(X, Y); % reorder randomly
+X = rescale(X); % works much better for rescaled data
+XA = X(Y<2, :); YA=Y(Y<2); % get class 0 vs 1
+XB = X(Y>0, :); YB=Y(Y>0); % get class 1 vs 2
+
+% (A) Show the two classes in a scatter plot and verify that one is 
+% linearly separable while the other is not.
+
+figure('Name','Class A');
+hold on;
+classZeroIndicies = find(YA==0);
+xPointsClassZero = XA(classZeroIndicies, 1:end);
+scatter(xPointsClassZero(:, 1), xPointsClassZero(:, 2));
+classOneIndicies = find(YA==1);
+xPointsClassOne = XA(classOneIndicies, 1:end);
+scatter(xPointsClassOne(:, 1), xPointsClassOne(:, 2));
+hold off;
+
+figure('Name','Class B');
+hold on;
+% classOneIndicies = find(YB==1);
+% xPointsClassOne = XB(classOneIndicies, 1:end);
+scatter(xPointsClassOne(:, 1), xPointsClassOne(:, 2));
+classTwoIndicies = find(YB==2);
+xPointsClassTwo = XB(classTwoIndicies, 1:end);
+scatter(xPointsClassTwo(:, 1), xPointsClassTwo(:, 2));
+hold off;
+
+
+%% (B) 
+
+learner=logisticClassify2(); % create "blank" learner
+learner=setClasses(learner, unique(YA)); % define class labels using YA or YB
+wts = [0.5 1 -0.25]; % TODO: fill in values
+learner=setWeights(learner, wts); % set the learner's parameters
+plot2DLinear(learner, XA, YA);
+
+
+
+
+
+
+
+% Note: Be sure to shuffle your data before doing SGD in part (f)  otherwise, 
+% if the data are in a pathological ordering (e.g., ordered by class), you 
+% may experience strange behavior and slow convergence during the optimization.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
