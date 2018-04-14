@@ -88,7 +88,7 @@ for i=Ks
     
     % Plot newly created linear predictor output at x new points.
     yline = predict(learner, polyx(xline, 2)); % Assuming quadratic features
-    plot(xline, yline, 'o', 'DisplayName', strcat('K=', num2str(i)));
+    plot(xline, yline, '', 'DisplayName', strcat('K=', num2str(i)));
 end
 
 %% 3. Hold-out and Cross-validation
