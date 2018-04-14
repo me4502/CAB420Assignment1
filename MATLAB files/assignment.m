@@ -87,7 +87,7 @@ for i=Ks
     yhat = predict(learner, xtr);
     
     % Plot newly created linear predictor output at x new points.
-    yline = predict(learner, polyx(xline, 2)); % Assuming quadratic features
+    yline = predict(learner, xline); % Assuming quadratic features
     plot(xline, yline, '', 'DisplayName', strcat('K=', num2str(i)));
 end
 
