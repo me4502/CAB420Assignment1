@@ -16,7 +16,7 @@ function obj = train(obj, X, Y, varargin)
   % default options:
   plotFlag = true; 
   init     = []; 
-  stopIter = 200; % Lowered to improve performance. Initially 1000.
+  stopIter = 100; % Lowered to improve performance. Initially 1000.
   stopTol  = -1;
   reg      = 0.0;
   stepsize = 1;
@@ -54,8 +54,9 @@ while (~done)
   step = stepsize/iter;               % update step-size and evaluate current loss values
   Jsur(iter) = inf;   
   %%% TODO: compute surrogate (neg log likelihood) loss
-  Jsur(iter) = mean( - Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * sum((obj.wts * obj.wts')'));
-  J01(iter) = err(obj,X,Yin);
+  wtsTrans = (obj.wts * obj.wts')';
+  Jsur(iter) = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * sum(wtsTrans));
+  J01(iter) = err(obj, X, Yin);
 
   if (plotFlag), switch d,            % Plots to help with visualization
     case 1, fig(2); plot1DLinear(obj,X,Yin);  %  for 1D data we can display the data and the function
@@ -71,17 +72,18 @@ while (~done)
 
     % Compute gradient:
     %%% TODO ^^^
-    grad = X1(j,:) * (y - Y(j)) + 2 * reg * obj.wts;
+    gradient = X1(j,:) * (y - Y(j)) + 2 * reg * obj.wts;
 
-    obj.wts = obj.wts - step * grad;      % take a step down the gradient
+    obj.wts = obj.wts - step * gradient;      % take a step down the gradient
   end;
 
-%   done = false;
-  JDelta =mean( - Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * obj.wts * obj.wts');  
-  if iter == stopIter || abs(JDelta - Jsur(iter)) < stopTol;
+
+  %   done = false;
+  %%% TODO: Check for stopping conditions
+  deltaJ = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * obj.wts * obj.wts');  
+  if (iter == stopIter || abs(deltaJ - Jsur(iter)) < stopTol)
     done = true;
   end;
-  %%% TODO: Check for stopping conditions
 
   wtsold = obj.wts;
   iter = iter + 1;
