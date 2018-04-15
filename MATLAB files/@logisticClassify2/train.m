@@ -16,7 +16,7 @@ function obj = train(obj, X, Y, varargin)
   % default options:
   plotFlag = true; 
   init     = []; 
-  stopIter = 1000;
+  stopIter = 200; % Lowered to improve performance. Initially 1000.
   stopTol  = -1;
   reg      = 0.0;
   stepsize = 1;
@@ -52,7 +52,9 @@ function obj = train(obj, X, Y, varargin)
 iter=1; Jsur=zeros(1,stopIter); J01=zeros(1,stopIter); done=0; 
 while (~done) 
   step = stepsize/iter;               % update step-size and evaluate current loss values
-  Jsur(iter) = inf;   %%% TODO: compute surrogate (neg log likelihood) loss
+  Jsur(iter) = inf;   
+  %%% TODO: compute surrogate (neg log likelihood) loss
+  Jsur(iter) = mean( - Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * sum((obj.wts * obj.wts')'));
   J01(iter) = err(obj,X,Yin);
 
   if (plotFlag), switch d,            % Plots to help with visualization
@@ -65,14 +67,20 @@ while (~done)
   for j=1:n,
     % Compute linear responses and activation for data point j
     %%% TODO ^^^
+    y = logistic(obj,X(j,:));
 
     % Compute gradient:
     %%% TODO ^^^
+    grad = X1(j,:) * (y - Y(j)) + 2 * reg * obj.wts;
 
     obj.wts = obj.wts - step * grad;      % take a step down the gradient
   end;
 
-  done = false;
+%   done = false;
+  JDelta =mean( - Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * obj.wts * obj.wts');  
+  if iter == stopIter || abs(JDelta - Jsur(iter)) < stopTol;
+    done = true;
+  end;
   %%% TODO: Check for stopping conditions
 
   wtsold = obj.wts;
