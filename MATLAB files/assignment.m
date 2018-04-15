@@ -99,18 +99,18 @@ ytest = mTest(: ,1); xtest = mTest(: ,2);
 
 xtrMin = xtr(1:20, :); ytrMin = ytr(1:20, :);
 
-knnMses = zeros(3, 100);
+knnMses = zeros(100, 3);
 
 for k=1:100
     learnerMin = knnRegress(k, xtrMin, ytrMin);
     yhatMin = predict(learner, xtest);
     
-    knnMses(1,k) = immse(yhatMin, ytest);
+    knnMses(k, 1) = immse(yhatMin, ytest);
     
     learnerAll = knnRegress(k, xtr, ytr);    
     yhatAll = predict(learner, xtest);
 
-    knnMses(2,k) = immse(yhatAll, ytest);
+    knnMses(k, 2) = immse(yhatAll, ytest);
     
     for i=1:4
         start = 20*(i - 1) + 1;
@@ -123,17 +123,17 @@ for k=1:100
         
         yhatCross = predict(learnerCross, xtestCross);
 
-        knnMses(3,k) = immse(yhatCross, ytestCross);
+        knnMses(k, 3) = immse(yhatCross, ytestCross);
     end
 end
 
 % Plot training data
 figure('name', 'kNN MSE');
 
-loglog(1:100, knnMses(1, :));
+loglog(1:100, knnMses(:, 1));
 hold on;
-loglog(1:100, knnMses(2, :));
-loglog(1:100, knnMses(3, :));
+loglog(1:100, knnMses(:, 2));
+loglog(1:100, knnMses(:, 3));
 
 xlabel('K');
 ylabel('Mean Squared Error');
