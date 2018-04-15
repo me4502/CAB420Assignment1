@@ -165,7 +165,7 @@ function Yte = predict(obj,Xte)
   end;
 end
 \end{lstlisting}
-
+~\\
 (b) Using the same technique as in Problem 1a, plot the predicted function for several values of k: 1, 2, 3, 5, 10, 50. (You can just use a for-loop to do this.) How does the choice of k relate to the “complexity” of the regression function?
 
 \begin{center}
@@ -175,7 +175,7 @@ end
 
 The closer to 1 that the k value is, the more complex the function appears. This is due to the line being influenced by more separate clusters of nodes when k is a lower value. When k is higher, individual nodes have less of an impact as it uses an average of the k nearest neighbours to determine the current y value.
 \newline
-
+~\\
 (c) We discussed in class that the k-nearest-neighbor classifier’s decision boundary can be shown to be piecewise linear. What kind of functions can be output by a nearest neighbor regression function? Briefly justify your conclusion. (You do not need to discuss the general case – just the 1-dimensional regression picture such as your plots.)
 \newline
 
@@ -183,6 +183,34 @@ In this case, as well as most cases, the output function will also be piecewise 
 
 
 \section{Hold-out and Cross-validation}
+(a) Similarly to Problem 1 and 2, compute the MSE of the test data on a model trained on only the first 20 training data examples for k = 1, 2, 3, . . . , 100. Plot the MSE versus k on a log-log scale (see help loglog).
+\newline
+
+See part c below.
+
+~\\
+(b) Repeat, but use all the training data. What happened? Contrast with your results from problem 1
+\newline
+
+For plot, see part c below.
+\newline
+
+With all of the training data, k nearest neighbours works better. Due to the lack of data points in the 20 training data set, the lower k values performed better than the higher ones. 
+\newline
+
+When k nearest neighbours has more data points available, higher k values can provide for a more accurate model. This is seen at around $10^1$ in the in the plot.
+
+~\\
+(c) 
+
+The cross validation allows us to get an estimated accuracy by averaging out the accuracy from multiple different models. It also allows for better validation of each k value without requiring more data, by using existing data over and over in different ways.
+
+\begin{center}
+	\includegraphics[width=35em]{2_3_Figure_1.png}
+	{Figure 2.3.1: kNN Regression model Mean Squared Error and Cross Validation.}
+\end{center} 
+
+
 \section{Nearest Neighbor Classifiers}
 %%%%%%%%%%%%%%%%%%%%
 (a) Plot the data by their feature values, using the class value to select the color.
