@@ -97,6 +97,52 @@ end
 ytr = mTrain(: ,1); xtr = mTrain(: ,2);
 ytest = mTest(: ,1); xtest = mTest(: ,2);
 
+xtrMin = xtr(1:20, :); ytrMin = ytr(1:20, :);
+
+knnMses = zeros(3, 100);
+
+for k=1:100
+    learnerMin = knnRegress(k, xtrMin, ytrMin);
+    
+    yhatMin = predict(learner, xtrMin);
+    ylineMin = predict(learner, xtest(1:20, :));
+    
+    knnMses(1,k) = immse(yhatMin, ylineMin);
+    
+    learnerAll = knnRegress(k, xtr, ytr);
+    
+    yhatAll = predict(learner, xtr);
+    ylineAll = predict(learner, xtest);
+    
+    knnMses(2,k) = immse(yhatMin, ylineMin);
+    
+    for i=1:4
+        start = 20*(i - 1) + 1;
+        endIndex = start + 19;
+        crossTest = mTrain(start:endIndex, :);
+        crossTrain = setdiff(1:80, crossTest);
+        ytrCross = crossTrain(: ,1); xtrCross = crossTrain(: ,2);
+        learnerCross = knnRegress(k, xtrCross, ytrCross);
+        
+        yhatCross = predict(learnerCross, xtrCross);
+        ylineCross = predict(learnerCross, crossTest);
+
+        knnMses(3,k) = immse(yhatCross, ylineCross);
+    end
+end
+
+% Plot training data
+figure('name', 'kNN MSE');
+
+loglog(1:100, knnMses(1, :));
+hold on;
+loglog(1:100, knnMses(2, :));
+loglog(1:100, knnMses(3, :));
+
+xlabel('K');
+ylabel('Mean Squared Error');
+legend('20 Training Data Points', 'All Training Data Points', 'Cross Validation');
+
 %% 4. Nearest Neighbor Classifiers
 
 % Import the dataset.
