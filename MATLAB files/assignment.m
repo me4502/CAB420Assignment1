@@ -6,64 +6,67 @@
 % 
 %
 %% 1. Features, Classes, and Linear Regression
+disp('1. Features, Classes, and Linear Regression');
 
-% Load motorcycle training dataset
-mTrain = load('data/mcycleTrain.txt');
+% (a) Plot the training data in a scatter plot.
+mTrain = load('data/mcycleTrain.txt'); % Load motorcycle training dataset
+ytr = mTrain(: ,1); xtr = mTrain(: ,2); % Separate features; x = single fature, y = target value
+figure('name', 'Training Data');
+plot (xtr, ytr, 'bo'); % Plot training data
+xlabel('x');
+ylabel('y');
+title('Scatter Plot of Training Data');
 
-% Separate features; x = single fature, y = target value
-ytr = mTrain(: ,1); xtr = mTrain(: ,2);
-
-% Add contant feature and quatratic feature of x
+% (b) Create a linear predictor (slope and intercept) using the above
+%    functions. Plot it on the same plot as the training data.
 Xtr = polyx(xtr, 2);
-
-% Create and learn a regression predictor from the data Xtr, ytr.
-learner = linearReg(Xtr, ytr);
-
-% Use learner to predict the y-values at the original training data points.
-yhat = predict(learner, Xtr);
-
-% Plot newly created linear predictor output at x new points.
+learner_quadratic = linearReg(Xtr, ytr); % Create and learn a regression predictor from the data Xtr, ytr.
 xline = [0:.01:2]' ; % Transpose
-yline = predict(learner, polyx(xline, 2)); % Assuming quadratic features
+yline = predict(learner_quadratic, polyx(xline, 2)); % Assuming quadratic features
 figure('name', 'Quadratic linear predictor');
 plot(xline, yline, 'ro');
-
-% Plot training data and label figure.
-hold on
-plot (xtr, ytr, 'bo'); % Plot training data
+hold on % Plot training data and label figure.
+plot (xtr, ytr, 'bo');
 legend('Linear Predictor', 'Training Data');
 title('Quadratic linear predictor');
 
-% Calculate Mean Squared Error (MSE) for quadratic model using training data.
-mseQuadTrain = immse(yhat, ytr);
-
-% Calculate MSE for quadratic model using test data.
-mTest = load('data/mcycleTest.txt');
-ytest = mTest(: ,1); xtest = mTest(: ,2);
-Xtest = polyx(xtest, 2);
-learner = linearReg(Xtest, ytest);
-yhat = predict(learner, Xtest);
-mseQuadTest = immse(yhat, ytest);
-
-% Repeat process for a fifth-degree polynomial.
+% (c) Create another plot with the data and a fifth-degree polynomial.
 Xtr = polyx(xtr, 5);
-learner = linearReg ( Xtr , ytr );
-yhat = predict ( learner , Xtr );
-yline = predict ( learner , polyx ( xline ,5) ); % assuming quintic features
+learner_quintic = linearReg (Xtr , ytr);
+yline = predict (learner_quintic , polyx(xline ,5)); % assuming quintic features
 figure('name', 'Quintic linear predictor');
 plot ( xline , yline ,'ro ');
 hold on
 plot (xtr, ytr, 'bo');
 legend('Linear Predictor', 'Training Data');
 title('Quintic linear predictor');
-mseQuinTrain = immse(yhat, ytr); % Calculate MSE for training data
-Xtest = polyx(xtest, 5); % Calculate MSE for test data
-learner = linearReg(Xtest, ytest);
-yhat = predict(learner, Xtest);
-mseQuinTest = immse(yhat, ytest);
 
-fprintf('The MSE for the quadratic linear predictor was: %.2f (training data), %.2f (test data)\n', mseQuadTrain, mseQuadTest);
-fprintf('The MSE for the quintic linear predictor was: %.2f (training data), %.2f (test data)\n', mseQuinTrain, mseQuinTest);
+% (d) Calculate the mean squared error associated with each of your learned 
+%     models on the training data.
+% Quadratic
+Xtr = polyx(xtr, 2);
+yhat = predict(learner_quadratic, Xtr);
+mseQuadTrain = immse(yhat, ytr);
+fprintf('The MSE for the quadratic linear predictor on training data was: %.2f\n', mseQuadTrain);
+% Quintic
+Xtr = polyx(xtr, 5);
+yhat = predict(learner_quintic, Xtr);
+mseQinTrain = immse(yhat, ytr);
+fprintf('The MSE for the quintic linear predictor on training data was: %.2f\n', mseQinTrain);
+
+% (e) Calculate the MSE for each model on the test data (in mcycleTest.txt).
+mTest = load('data/mcycleTest.txt');
+ytest = mTest(: ,1); xtest = mTest(: ,2);
+% Quadratic
+Xtest = polyx(xtest, 2);
+yhat = predict(learner_quadratic, Xtest);
+mseQuadTest = immse(yhat, ytest);
+fprintf('The MSE for the quadratic linear predictor on test data was: %.2f\n', mseQuadTest);
+% Quintic
+Xtest = polyx(xtest, 5);
+yhat = predict(learner_quintic, Xtest);
+mseQuinTest = immse(yhat, ytest);
+fprintf('The MSE for the quintic linear predictor on test data was: %.2f\n', mseQuinTest);
 
 
 %% 2. kNN Regression
@@ -185,6 +188,7 @@ scatter(xPointsClassZero(:, 1), xPointsClassZero(:, 2));
 classOneIndicies = find(YA==1);
 xPointsClassOne = XA(classOneIndicies, 1:end);
 scatter(xPointsClassOne(:, 1), xPointsClassOne(:, 2));
+title('Class A');
 hold off;
 
 figure('Name','Class B');
@@ -195,19 +199,59 @@ scatter(xPointsClassOne(:, 1), xPointsClassOne(:, 2));
 classTwoIndicies = find(YB==2);
 xPointsClassTwo = XB(classTwoIndicies, 1:end);
 scatter(xPointsClassTwo(:, 1), xPointsClassTwo(:, 2));
+title('Class B');
 hold off;
 
 
-%% (B) 
+%% (B) Write the function @logisticClassify2/plot2DLinear.m such that it 
+%      can Plot the two classes of data in different colors, along with the 
+%      decision boundary (a line). To demo your function plot the decision 
+%       boundary corresponding to the classifier sign( .5 + 1x1 ? .25x2 )
+%       along with the A data, and again with the B data.
 
 learner=logisticClassify2(); % create "blank" learner
 learner=setClasses(learner, unique(YA)); % define class labels using YA or YB
 wts = [0.5 1 -0.25]; % TODO: fill in values
 learner=setWeights(learner, wts); % set the learner's parameters
+figure('Name','Linear Plot');
 plot2DLinear(learner, XA, YA);
+title('Class A with Decision Boundary');
+figure('Name','Linear Plot');
+plot2DLinear(learner, XB, YB);
+title('Class B with Decision Boundary');
 
 
+%% (C) Complete the predict.m function to make predictions for your linear 
+%      classifier.  Verify that your function works by computing & 
+%      reporting the error rate of the classifier in the previous
+%      part on both data sets A and B. (The error rate on data set A should
+%      be ? 0.0505.)
 
+yte = predict(learner,XA);
+classError = errorTrain(YA,yte); % = 0.0505
+disp(strcat({'The error for class A is:'},{' '},{num2str(classError,' %.4f')}));
+
+yte = predict(learner,XB);
+classError = errorTrain(YB,yte); % = 0.5455
+disp(strcat({'The error for class B is:'},{' '},{num2str(classError,' %.4f')}));
+
+
+%% (D) Refer to report.
+
+
+%% (E) ...
+h=figure;
+train(learner,XA, YA);
+saveas(h,'logistic1.jpg','jpg');
+
+%% E 2
+h=figure;
+train(learner,XA, YA);
+saveas(h,'logistic2.jpg','jpg');
+
+plotClassify2D(learner, XA, YA);
+
+%% (F) ...
 
 
 
