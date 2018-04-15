@@ -9,6 +9,6 @@
         dist = sum( bsxfun( @minus, obj.Xtrain, Xte(i,:) ).^2 , 2);  % compute sum of squared differences
         %dist = sum( (obj.Xtrain - repmat(Xte(i,:),[Ntr,1]) ).^2 , 2);  % compute sum of squared differences
         [tmp,idx] = sort(dist);              % find nearest neighbors over Xtrain (dimension 2)                                  
-        Yte(i) = mean(obj.Ytrain(idx(1:K)));   % predict ith test example's value from nearest neighbors
+        Yte(i) = mean(obj.Ytrain(idx(1:K)));   % Set y to the mean of the K nearest neighbours
       end;
     end

@@ -84,22 +84,15 @@ xline = [0:.01:2]' ; % Transpose
 for i=Ks
     learner = knnRegress(i, xtr, ytr);
     
-    yhat = predict(learner, xtr);
-    
-    % Plot newly created linear predictor output at x new points.
-    yline = predict(learner, xline); % Assuming quadratic features
+    % Plot newly created knn regress output at x points.
+    yline = predict(learner, xline);
     plot(xline, yline, '', 'DisplayName', strcat('K=', num2str(i)));
 end
 
 %% 3. Hold-out and Cross-validation
 
-
-
-
-
-
-
-
+ytr = mTrain(: ,1); xtr = mTrain(: ,2);
+ytest = mTest(: ,1); xtest = mTest(: ,2);
 
 %% 4. Nearest Neighbor Classifiers
 
