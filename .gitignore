@@ -1,3 +1,7 @@
 *.asv
 .DS_Store
 *~
+*.aux
+*.log
+*.synctex.gz
+Assignment 1 - CAB420.pdf
