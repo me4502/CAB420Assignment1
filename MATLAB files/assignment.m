@@ -103,18 +103,14 @@ knnMses = zeros(3, 100);
 
 for k=1:100
     learnerMin = knnRegress(k, xtrMin, ytrMin);
+    yhatMin = predict(learner, xtest);
     
-    yhatMin = predict(learner, xtrMin);
-    ylineMin = predict(learner, xtest(1:20, :));
+    knnMses(1,k) = immse(yhatMin, ytest);
     
-    knnMses(1,k) = immse(yhatMin, ylineMin);
-    
-    learnerAll = knnRegress(k, xtr, ytr);
-    
-    yhatAll = predict(learner, xtr);
-    ylineAll = predict(learner, xtest);
-    
-    knnMses(2,k) = immse(yhatMin, ylineMin);
+    learnerAll = knnRegress(k, xtr, ytr);    
+    yhatAll = predict(learner, xtest);
+
+    knnMses(2,k) = immse(yhatAll, ytest);
     
     for i=1:4
         start = 20*(i - 1) + 1;
@@ -122,12 +118,12 @@ for k=1:100
         crossTest = mTrain(start:endIndex, :);
         crossTrain = setdiff(1:80, crossTest);
         ytrCross = crossTrain(: ,1); xtrCross = crossTrain(: ,2);
+        ytestCross = crossTest(: ,1); xtestCross = crossTest(: ,2);
         learnerCross = knnRegress(k, xtrCross, ytrCross);
         
-        yhatCross = predict(learnerCross, xtrCross);
-        ylineCross = predict(learnerCross, crossTest);
+        yhatCross = predict(learnerCross, xtestCross);
 
-        knnMses(3,k) = immse(yhatCross, ylineCross);
+        knnMses(3,k) = immse(yhatCross, ytestCross);
     end
 end
 
