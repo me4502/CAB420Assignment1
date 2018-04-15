@@ -140,6 +140,48 @@ The MSE for the quintic linear predictor on test data was: 999.65
 
 
 \section{kNN Regression}
+%%%%%%%%%%%%%%%%%%%%
+(a) Using the knnRegress class, implement (add code to) the predict function to make it functional.
+\begin{lstlisting}[language=Matlab, caption=predict() Implementation]
+% Test function: predict on Xtest
+function Yte = predict(obj,Xte)
+  % get size of training, test data
+  [Ntr,Mtr] = size(obj.Xtrain);
+  [Nte,Mte] = size(Xte);
+  % figure out how many classes & their labels
+  classes = unique(obj.Ytrain);        
+  % make Ytest the same data type as Ytrain  
+  Yte = repmat(obj.Ytrain(1), [Nte,1]);  
+  % can't have more than Ntrain neighbors
+  K = min(obj.K, Ntr);                  
+  % For each test example:
+  for i=1:Nte,                
+    % compute sum of squared differences          
+    dist = sum( bsxfun( @minus, obj.Xtrain, Xte(i,:) ).^2 , 2);  
+    % find nearest neighbors over Xtrain (dimension 2)
+    [tmp,idx] = sort(dist);                                                
+    % Set y to the mean of the K nearest neighbours
+    Yte(i) = mean(obj.Ytrain(idx(1:K)));   
+  end;
+end
+\end{lstlisting}
+
+(b) Using the same technique as in Problem 1a, plot the predicted function for several values of k: 1, 2, 3, 5, 10, 50. (You can just use a for-loop to do this.) How does the choice of k relate to the “complexity” of the regression function?
+
+\begin{center}
+	\includegraphics[width=35em]{2_2_Figure_1.png}
+	{Figure X: kNN Regression model at various k values.}
+\end{center} 
+
+The closer to 1 that the k value is, the more complex the function appears. This is due to the line being influenced by more separate clusters of nodes when k is a lower value. When k is higher, individual nodes have less of an impact as it uses an average of the k nearest neighbours to determine the current y value.
+\newline
+
+(c) We discussed in class that the k-nearest-neighbor classifier’s decision boundary can be shown to be piecewise linear. What kind of functions can be output by a nearest neighbor regression function? Briefly justify your conclusion. (You do not need to discuss the general case – just the 1-dimensional regression picture such as your plots.)
+\newline
+
+In this case, as well as most cases, the output function will also be piecewise linear. Linear because there will only ever be a single y value for each x value, and piecewise because it may not necessarily be a single plot-able function. In this specific case it's much too complicated to be plotted as a single function and must be plotted as a piecewise.
+
+
 \section{Hold-out and Cross-validation}
 \section{Nearest Neighbor Classifiers}
 %%%%%%%%%%%%%%%%%%%%
