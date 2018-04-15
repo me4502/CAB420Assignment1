@@ -104,32 +104,32 @@ Using proof by contradiction,
 
 \section{Features, Classes, and Linear Regression}
 %%%%%%%%%%%%%%%%%%%%
-(a) Plot the training data in a scatter plot.
+{\bf (a) Plot the training data in a scatter plot.}
 \begin{center}
-	\includegraphics[width=35em]{2_1_Figure_1.png}
+	\includegraphics[width=30em,keepaspectratio]{2_1_Figure_1.png}\\
 	{Figure 2.1.1: Training data in a scatter plot.}
 \end{center} 
 ~\\
-(b) Create a linear predictor (assuming quadratic features). Plot it on the same plot as the training data.
+{\bf (b) Create a linear predictor (assuming quadratic features). Plot it on the same plot as the training data.}
 \begin{center}
-	\includegraphics[width=35em]{2_1_Figure_2.png}
+	\includegraphics[width=30em,keepaspectratio]{2_1_Figure_2.png}\\
 	{Figure 2.1.2: Quadratic linear predictor with training data scatter plot.}
 \end{center}.
 ~\\ 
-(c) Create another plot with the data and a fifth-degree polynomial.
+{\bf (c) Create another plot with the data and a fifth-degree polynomial.}
 \begin{center}
-	\includegraphics[width=35em]{2_1_Figure_3.png}
+	\includegraphics[width=30em,keepaspectratio]{2_1_Figure_3.png}\\
 	{Figure 2.1.3: Quintic linear predictor with training data scatter plot.}
 \end{center}
 ~\\
-(d) Calculate the mean squared error associated with each of your learned models on the training
+{\bf (d) Calculate the mean squared error associated with each of your learned models on the training.}
 data.
 \begin{lstlisting}[caption=Matlab output for MSE calculations on training data.]
 The MSE for the quadratic linear predictor on training data was: 2178.55
 The MSE for the quintic linear predictor on training data was: 1254.61
 \end{lstlisting}
 ~\\
-(e) Calculate the MSE for each model on the test data (in mcycleTest.txt).
+{\bf (e) Calculate the MSE for each model on the test data (in mcycleTest.txt).}
 \begin{lstlisting}[caption=Matlab output for MSE calculations on test data.]
 The MSE for the quadratic linear predictor on test data was: 1573.27
 The MSE for the quintic linear predictor on test data was: 999.65
@@ -141,7 +141,7 @@ The MSE for the quintic linear predictor on test data was: 999.65
 
 \section{kNN Regression}
 %%%%%%%%%%%%%%%%%%%%
-(a) Using the knnRegress class, implement (add code to) the predict function to make it functional.
+{\bf (a) Using the knnRegress class, implement (add code to) the predict function to make it functional.}
 \begin{lstlisting}[language=Matlab, caption=predict() Implementation]
 % Test function: predict on Xtest
 function Yte = predict(obj,Xte)
@@ -166,7 +166,7 @@ function Yte = predict(obj,Xte)
 end
 \end{lstlisting}
 ~\\
-(b) Using the same technique as in Problem 1a, plot the predicted function for several values of k: 1, 2, 3, 5, 10, 50. (You can just use a for-loop to do this.) How does the choice of k relate to the “complexity” of the regression function?
+{\bf (b) Using the same technique as in Problem 1a, plot the predicted function for several values of k: 1, 2, 3, 5, 10, 50. (You can just use a for-loop to do this.) How does the choice of k relate to the “complexity” of the regression function?}
 
 \begin{center}
 	\includegraphics[width=35em]{2_2_Figure_1.png}
@@ -176,50 +176,43 @@ end
 The closer to 1 that the k value is, the more complex the function appears. This is due to the line being influenced by more separate clusters of nodes when k is a lower value. When k is higher, individual nodes have less of an impact as it uses an average of the k nearest neighbours to determine the current y value.
 \newline
 ~\\
-(c) We discussed in class that the k-nearest-neighbor classifier’s decision boundary can be shown to be piecewise linear. What kind of functions can be output by a nearest neighbor regression function? Briefly justify your conclusion. (You do not need to discuss the general case – just the 1-dimensional regression picture such as your plots.)
+{\bf (c) We discussed in class that the k-nearest-neighbor classifier’s decision boundary can be shown to be piecewise linear. What kind of functions can be output by a nearest neighbor regression function? Briefly justify your conclusion. (You do not need to discuss the general case – just the 1-dimensional regression picture such as your plots.)}
 \newline
 
 In this case, as well as most cases, the output function will also be piecewise linear. Linear because there will only ever be a single y value for each x value, and piecewise because it may not necessarily be a single plot-able function. In this specific case it's much too complicated to be plotted as a single function and must be plotted as a piecewise.
 
 
 \section{Hold-out and Cross-validation}
-(a) Similarly to Problem 1 and 2, compute the MSE of the test data on a model trained on only the first 20 training data examples for k = 1, 2, 3, . . . , 100. Plot the MSE versus k on a log-log scale (see help loglog).
-\newline
-
+{\bf (a) Similarly to Problem 1 and 2, compute the MSE of the test data on a model trained on only the first 20 training data examples for k = 1, 2, 3, . . . , 100. Plot the MSE versus k on a log-log scale (see help loglog).}
+\\~\\
 See part c below.
-
-~\\
-(b) Repeat, but use all the training data. What happened? Contrast with your results from problem 1
-\newline
-
+\\~\\
+{\bf (b) Repeat, but use all the training data. What happened? Contrast with your results from problem 1}
+\\~\\
 For plot, see part c below.
-\newline
-
+\\~\\
 With all of the training data, k nearest neighbours works better. Due to the lack of data points in the 20 training data set, the lower k values performed better than the higher ones. 
-\newline
-
+\\~\\
 When k nearest neighbours has more data points available, higher k values can provide for a more accurate model. This is seen at around $10^1$ in the in the plot.
-
-~\\
-(c) 
-
+\\~\\
+{\bf (c) }
+\\~\\
 The cross validation allows us to get an estimated accuracy by averaging out the accuracy from multiple different models. It also allows for better validation of each k value without requiring more data, by using existing data over and over in different ways.
-
 \begin{center}
-	\includegraphics[width=35em]{2_3_Figure_1.png}
+	\includegraphics[width=30em,keepaspectratio]{2_3_Figure_1.png}\\
 	{Figure 2.3.1: kNN Regression model Mean Squared Error and Cross Validation.}
 \end{center} 
 
 
 \section{Nearest Neighbor Classifiers}
 %%%%%%%%%%%%%%%%%%%%
-(a) Plot the data by their feature values, using the class value to select the color.
+{\bf (a) Plot the data by their feature values, using the class value to select the color.}
 \begin{center}
 	\includegraphics[width=35em]{2_4_Figure_1.png}
 	{Figure 2.4.1: Data plotted by feature value with class value determining colour.}
 \end{center} 
 ~\\
-(b) Use the provided $knnClassify$ class to learn a 1-nearest-neighbour predictor. Use the function $class2DPlot(learner,X,Y)$ to plot the decision regions and training data together.
+{\bf (b) Use the provided $knnClassify$ class to learn a 1-nearest-neighbour predictor. Use the function $class2DPlot(learner,X,Y)$ to plot the decision regions and training data together.}
 \begin{lstlisting}[language=Matlab, caption=Teaching the 1-nearest-neighbour predictor.]
 learner = knnClassify(1, X, Y);
 class2DPlot(learner,X,Y);
@@ -230,7 +223,7 @@ title('1-nearest-neighbour predictor');
 	{Figure 2.4.2: Plot of 1-nearest-neighbour predictor. Generated with the code in Listing 2.4.}
 \end{center} 
 ~\\
-(c) Do the same thing for several values of k (say, [1, 3, 10, 30]) and comment on their appearance.
+{\bf (c) Do the same thing for several values of k (say, [1, 3, 10, 30]) and comment on their appearance.}
 \begin{lstlisting}[language=Matlab, caption=Teaching k-nearest-neighbour predictor for multiple values of k. {\bf Note:} figure for 1-nearest-neighbour predictor is above in part (b).]
 kValues = [1,3,10,30]; % k=1 is already plotted above in (B).
 for index = 1:length(kValues)
@@ -240,20 +233,20 @@ for index = 1:length(kValues)
 end
 \end{lstlisting}
 \begin{center}
-	\includegraphics[width=35em]{2_4_Figure_3.png}
+	\includegraphics[width=30em,keepaspectratio]{2_4_Figure_3.png}\\
 	{Figure 2.4.3: Plot of 3-nearest-neighbour predictor. Generated with the code in Listing 2.4.}
 \end{center} 
 \begin{center}
-	\includegraphics[width=35em]{2_4_Figure_4.png}
+	\includegraphics[width=30em,keepaspectratio]{2_4_Figure_4.png}\\
 	{Figure 2.4.4: Plot of 10-nearest-neighbour predictor. Generated with the code in Listing 2.4.}
 \end{center} 
 \begin{center}
-	\includegraphics[width=35em]{2_4_Figure_5.png}
+	\includegraphics[width=30em,keepaspectratio]{2_4_Figure_5.png}\\
 	{Figure 2.4.5: Plot of 30-nearest-neighbour predictor. Generated with the code in Listing 2.4.}
 \end{center} 
-{From visual inspection of figures 2.4.2-2.4.5, as the value of $k$ increases, so does the definition of the decision regions. For small values of $k$ (such as 1), clear under-fitting can be observed. The opposite is also true for large values (such as 30) at which point over-fitting occurs.}
+{From visual inspection of figures 2.4.[2-5], as the value of $k$ increases, so does the definition of the decision regions. For small values of $k$ (such as 1), clear under-fitting can be observed. The opposite is also true for large values (such as 30) at which point over-fitting occurs.}
 \\~\\
-{(d) Now split the data into an 80/20 training/validation split. For k = [1, 2, 5, 10, 50, 100, 200], learn a model on the 80$\%$ and calculate its performance ($\#$ of data classified incorrectly) on the validation data.}
+{\bf (d) Now split the data into an 80/20 training/validation split. For k = [1, 2, 5, 10, 50, 100, 200], learn a model on the 80$\%$ and calculate its performance ($\#$ of data classified incorrectly) on the validation data.}
 \begin{lstlisting}[language=Matlab, caption=Training models on 80\% training data and calculating its performance on 20\% validation data.]
 Xtrain = X(1:118, 1:end);
 Xvalid = X(119:end, 1:end);
@@ -272,24 +265,24 @@ end
 	\includegraphics[width=35em]{2_4_Figure_6.png}
 	{Figure 2.4.6: Plot of incorrectly classified validation data points against k-nearest-neighbour predictors. Data generated with the code in Listing 2.5.}
 \end{center} 
-{What value of k appears to generalize best given your training data? Comment on the performance at the two endpoints, in terms of over- or under-fitting.} \\~\\
+{\bf What value of k appears to generalize best given your training data? Comment on the performance at the two endpoints, in terms of over- or under-fitting.} \\~\\
 {For small values of $k$ (1,3,5), under-fitting is present, while larger values (200) provide over-fitting models. As a result, $k$ appears to generalise best between these two values. For Figure 2.4.6 specifically, $k = 10$ appears to generalise best.}
 
 
 
 
 \section{Perceptrons and Logistic Regression}
-{(a) Show the two classes in a scatter plot and verify that one is linearly separable while the other is not.}
+{\bf (a) Show the two classes in a scatter plot and verify that one is linearly separable while the other is not.}
 \begin{center}
-	\includegraphics[width=35em]{2_5_Figure_1.png}
+	\includegraphics[width=30em,keepaspectratio]{2_5_Figure_1.png}\\
 	{Figure 2.5.1: Class A. Data {\bf is} linearly separable.}
 \end{center} 
 \begin{center}
-	\includegraphics[width=35em]{2_5_Figure_2.png}
+	\includegraphics[width=30em,keepaspectratio]{2_5_Figure_2.png}\\
 	{Figure 2.5.2: Class B. Data {\bf is not} linearly separable.}
 \end{center} 
 ~\\
-{(b) Write the function @logisticClassify2/plot2DLinear.m so that it plots the two
+{\bf (b) Write the function @logisticClassify2/plot2DLinear.m so that it plots the two
 classes of data in different colors, along with the decision boundary. Include the listing of your code in your report.}
 
 \begin{lstlisting}[language=Matlab, caption=plot2DLinear() Implementation]
@@ -325,7 +318,7 @@ ezplot(f,[-3.5,3.5])
 legend('Class 0','Class 1', 'Decision Bondary');
 hold off;
 \end{lstlisting}
-{To demo your function plot the decision boundary corresponding to the classifier: $sign( .5 + 1x_{1} − .25x_{2} )$ along with the A data, and again with the B data.}
+{\bf To demo your function plot the decision boundary corresponding to the classifier: $sign( .5 + 1x_{1} − .25x_{2} )$ along with the A data, and again with the B data.}
 \begin{lstlisting}[language=Matlab, caption=Demoing plot2DLinear()]
 %% (B) Write the function @logisticClassify2/plot2DLinear.m such that it 
 %      can Plot the two classes of data in different colors, along with the 
@@ -343,15 +336,15 @@ plot2DLinear(learner, XB, YB);
 title('Class B with Decision Boundary');
 \end{lstlisting}
 \begin{center}
-	\includegraphics[width=35em]{2_5_Figure_3.png}
+	\includegraphics[width=30em,keepaspectratio]{2_5_Figure_3.png}\\
 	{Figure 2.5.3: Class A with decision boundary plotted.}
 \end{center} 
 \begin{center}
-	\includegraphics[width=35em]{2_5_Figure_4.png}
+	\includegraphics[width=30em,keepaspectratio]{2_5_Figure_4.png}\\
 	{Figure 2.5.4: Class B with decision boundary plotted.}
 \end{center} 
 ~\\
-{(c) Complete the predict.m function to make predictions for your linear classifier.}
+{\bf (c) Complete the predict.m function to make predictions for your linear classifier.}
 \begin{lstlisting}[language=Matlab, caption=predict() Implementation]
 function Yte = predict(obj,Xte)
 % Yhat = predict(obj, X)  : make predictions on test data X
@@ -369,7 +362,7 @@ end;
 
 Yte = yhat;
 \end{lstlisting}
-{Again, verify that your function works by computing \& reporting the error rate of the classifier in the previous part on both data sets A and B. (The error rate on data set A should be ≈ 0.0505.)}
+{\bf Again, verify that your function works by computing \& reporting the error rate of the classifier in the previous part on both data sets A and B. (The error rate on data set A should be ≈ 0.0505.)}
 \begin{lstlisting}[language=Matlab, caption=Verifying predict() works]
 % Data set A
 yte = predict(learner,XA);
@@ -397,19 +390,19 @@ disp(strcat({'The error for class B is:'},{' '},{num2str(finalClassError,' %.4f'
 'The error rate for class B is: 0.5455'
 \end{lstlisting}
 ~\\
-{(d) In my provided code, I first transform the classes in the data Y into "class 0" (negative) and "class 1" (positive). In our notation, let $z = \theta x^{(i)}$ is the linear response of the perceptron, and $\sigma$ is the standard logistic function.
+{\bf (d) In my provided code, I first transform the classes in the data Y into "class 0" (negative) and "class 1" (positive). In our notation, let $z = \theta x^{(i)}$ is the linear response of the perceptron, and $\sigma$ is the standard logistic function.
 $$\sigma (z) = (1 + exp(-z))^{-1}$$
 The (regularized) logistic negative log likelihood loss for a single data point j is then
 $$ J_{j}(\theta) = -y^{(j)} log \sigma (\theta x^{(j)T}) - (1 - y^{(j)})log(1-\sigma (\theta x^{(j)T})) + \alpha \sum_{i} \theta^{2}_{i} $$
 where $y(j)$ is either 0 or 1. Derive the gradient of the regularized negative log likelihood $J_{j}$
-for logistic regression, and give it in your report.
+for logistic regression, and give it in your report.}
 \\~\\
-The derivative of the gradient can be found by computing $\frac{\partial J_{j}(\theta)}{\partial \theta_{i}}$ over the surrogate loss for point j, as given by $x^{(j)}$, $y^{(i)}$. The derivative then is as follows:
+{The derivative of the gradient can be found by computing $\frac{\partial J_{j}(\theta)}{\partial \theta_{i}}$ over the surrogate loss for point j, as given by $x^{(j)}$, $y^{(i)}$. The derivative then is as follows:
 $$\frac{\partial J_{j}(\theta)}{\partial \theta_{i}} = x^{j}((1+exp(z))^{-1} - y^{(j)}) + 2.\alpha.\theta_{i} $$}
 \\~\\
-(e) Complete your train.m function to perform stochastic gradient descent on the logistic loss function. This will require that you fill in:
+{\bf (e) Complete your train.m function to perform stochastic gradient descent on the logistic loss function. This will require that you fill in:}
 \\~\\
-(1) computing the surrogate loss function at each iteration ($J = 1/m\sum J_{j}$)
+{\bf (1) computing the surrogate loss function at each iteration ($J = 1/m\sum J_{j}$)}
 \begin{lstlisting}[language=Matlab, caption=Calculating surrogate loss at each point.]
 iter=1; Jsur=zeros(1,stopIter); J01=zeros(1,stopIter); done=0; 
 while (~done) 
@@ -421,14 +414,14 @@ while (~done)
   J01(iter) = err(obj, X, Yin);
 \end{lstlisting}
 ~\\
-(2) computing the prediction and gradient associated with each data point $x^{(i)}, j^{(i)}$;
+{\bf (2) computing the prediction and gradient associated with each data point $x^{(i)}, j^{(i)}$;}
 \begin{lstlisting}[language=Matlab, caption=Compute linear responses and activation for data point j.]
     % Compute linear responses and activation for data point j
     %%% TODO ^^^
     y = logistic(obj,X(j,:));
 \end{lstlisting}
 ~\\
-(3) a gradient step on the parameters θ;
+{\bf (3) a gradient step on the parameters θ;}
 \begin{lstlisting}[language=Matlab, caption=Compute gradient.]
     % Compute gradient:
     %%% TODO ^^^
@@ -437,7 +430,7 @@ while (~done)
     obj.wts = obj.wts - step * gradient;      % take a step down the gradient
 \end{lstlisting}
 ~\\
-(4) a stopping criterion (usually either stopIter iterations or that J has not changed by more than stopTol since the last iteration through all the data).
+{\bf (4) a stopping criterion (usually either stopIter iterations or that J has not changed by more than stopTol since the last iteration through all the data).}
 \begin{lstlisting}[language=Matlab, caption=Implement stopping criterion.]
   %   done = false;
   %%% TODO: Check for stopping conditions
@@ -447,8 +440,7 @@ while (~done)
   end;
 \end{lstlisting}
 ~\\
-
-(f) Run your logistic regression classifier on both data sets (A and B); for this problem, use no regularization ($\alpha = 0$). Describe your parameter choices (stepsize, etc.) and show a plot of both the convergence of the surrogate loss and error rate, and a plot of the final converged classifier with the data (using e.g. plotClassify2D). In your report, please also include the functions that you wrote (at minimum, train.m, but possibly a few small helper functions as well).
+{\bf (f) Run your logistic regression classifier on both data sets (A and B); for this problem, use no regularization ($\alpha = 0$). Describe your parameter choices (stepsize, etc.) and show a plot of both the convergence of the surrogate loss and error rate, and a plot of the final converged classifier with the data (using e.g. plotClassify2D). In your report, please also include the functions that you wrote (at minimum, train.m, but possibly a few small helper functions as well).}
 
 \begin{lstlisting}[language=Matlab, caption=Full train.m implementation.]
 function obj = train(obj, X, Y, varargin)
@@ -558,38 +550,34 @@ legend('Error Rate', 'Surrogate Loss');
 figure();
 plotClassify2D(learner, XB, YB);
 \end{lstlisting}
-
-
-
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_1.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_1.png}\\
 	{Figure 2.6.1: Plot of convergence of error rate and surrogate loss for Class A.}
 \end{center} 
-
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_2.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_2.png}\\
 	{Figure 2.6.2: Plot of final converged classifier for Class A.}
 \end{center} 
 
 
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_3.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_3.png}\\
 	{Figure 2.6.3: Plot of final converged classifier decision boundaries for Class A.}
 \end{center} 
 
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_4.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_4.png}\\
 	{Figure 2.6.4: Plot of convergence of error rate and surrogate loss for Class B.}
 \end{center} 
 
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_5.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_5.png}\\
 	{Figure 2.6.5: Plot of final converged classifier for Class B.}
 \end{center} 
 
 
 \begin{center}
-	\includegraphics[width=35em]{2_6_Figure_6.png}
+	\includegraphics[width=30em,keepaspectratio]{2_6_Figure_6.png}\\
 	{Figure 2.6.6: Plot of final converged classifier decision boundaries for Class B.}
 \end{center} 
 
