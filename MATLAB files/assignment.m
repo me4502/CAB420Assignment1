@@ -262,60 +262,45 @@ title('Class B with Decision Boundary');
 %      part on both data sets A and B. (The error rate on data set A should
 %      be ? 0.0505.)
 
+% Data set A
 yte = predict(learner,XA);
-classError = errorTrain(YA,yte); % = 0.0505
-disp(strcat({'The error for class A is:'},{' '},{num2str(classError,' %.4f')}));
-
+classError = 0;
+for i=1:size(YA,1);
+    if(YA(i) ~= yte(i));
+        classError = classError + 1;
+    end;
+end;
+finalClassError = classError/size(YA,1); % = 0.0505
+disp(strcat({'The error rate for class A is:'},{' '},{num2str(finalClassError,' %.4f')}));
+% Data set B
 yte = predict(learner,XB);
-classError = errorTrain(YB,yte); % = 0.5455
-disp(strcat({'The error for class B is:'},{' '},{num2str(classError,' %.4f')}));
-
+classError = 0;
+for i=1:size(YB,1);
+    if(YB(i) ~= yte(i));
+        classError = classError + 1;
+    end;
+end;
+finalClassError = classError/size(YB,1); % = 0.54555
+disp(strcat({'The error rate for class B is:'},{' '},{num2str(finalClassError,' %.4f')}));
 
 %% (D) Refer to report.
 
 
-%% (E) ...
-h=figure;
-train(learner,XA, YA);
-saveas(h,'logistic1.jpg','jpg');
+%% (E) Implemented train.m
 
-%% E 2
-h=figure;
-train(learner,XA, YA);
-saveas(h,'logistic2.jpg','jpg');
 
+%% (F) 
+
+% Train Class A
+train(learner, XA, YA);
+legend('Error Rate', 'Surrogate Loss');
+% Plot final converged classifier decision boundaries.
+figure();
 plotClassify2D(learner, XA, YA);
 
-%% (F) ...
-
-
-
-
-% Note: Be sure to shuffle your data before doing SGD in part (f)  otherwise, 
-% if the data are in a pathological ordering (e.g., ordered by class), you 
-% may experience strange behavior and slow convergence during the optimization.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%% Train Class B
+train(learner, XB, YB);
+legend('Error Rate', 'Surrogate Loss');
+% Plot final converged classifier decision boundaries.
+figure();
+plotClassify2D(learner, XB, YB);
