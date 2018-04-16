@@ -97,35 +97,46 @@ end
 ytr = mTrain(: ,1); xtr = mTrain(: ,2);
 ytest = mTest(: ,1); xtest = mTest(: ,2);
 
+% Create a copy of the data with only the first 20 points
 xtrMin = xtr(1:20, :); ytrMin = ytr(1:20, :);
 
+% Pre-allocate a matrix for all of the plotted values
 knnMses = zeros(100, 3);
 
 for k=1:100
+    % Create a learner for the first 20 points
     learnerMin = knnRegress(k, xtrMin, ytrMin);
     yhatMin = predict(learnerMin, xtest);
     
+    % Add the MSE of the test values vs the first 20 point prediction
     knnMses(k, 1) = immse(yhatMin, ytest);
     
+    % Create a learner for all of the data
     learnerAll = knnRegress(k, xtr, ytr);    
     yhatAll = predict(learnerAll, xtest);
 
+    % Add the MSE of the test values vs the prediction
     knnMses(k, 2) = immse(yhatAll, ytest);
     
     crossVal = 0;
     
     for i=1:4
+        % Find the start/end indexes of the indices
         start = 20*(i - 1) + 1;
         endIndex = start + 19;
         crossIndices = start:endIndex;
+        % Find the data based off these indices
         crossTest = mTrain(crossIndices, :);
         crossTrain = mTrain(setdiff(1:80, crossIndices), :);
+        % Grab the data from the cross validation data set
         ytrCross = crossTrain(: ,1); xtrCross = crossTrain(: ,2);
         ytestCross = crossTest(: ,1); xtestCross = crossTest(: ,2);
+        % Create a learner using this data
         learnerCross = knnRegress(k, xtrCross, ytrCross);
         
         yhatCross = predict(learnerCross, xtestCross);
 
+        % Add the cross validation MSE
         crossVal = crossVal + immse(yhatCross, ytestCross);
     end
     

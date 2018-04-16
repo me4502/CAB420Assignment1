@@ -319,7 +319,7 @@ hold off;
 
 learner=logisticClassify2(); % create "blank" learner
 learner=setClasses(learner, unique(YA)); % define class labels using YA or YB
-wts = [0.5 1 -0.25]; % TODO: fill in values
+wts = [0.5 1 -0.25]; 
 learner=setWeights(learner, wts); % set the learner's parameters
 plot2DLinear(learner, XA, YA);
 title('Class A with Decision Boundary');
@@ -399,7 +399,6 @@ iter=1; Jsur=zeros(1,stopIter); J01=zeros(1,stopIter); done=0;
 while (~done) 
   step = stepsize/iter;               % update step-size and evaluate current loss values
   Jsur(iter) = inf;   
-  %%% TODO: compute surrogate (neg log likelihood) loss
   wtsTrans = (obj.wts * obj.wts')';
   Jsur(iter) = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * sum(wtsTrans));
   J01(iter) = err(obj, X, Yin);
@@ -408,14 +407,12 @@ while (~done)
 {\bf (2) computing the prediction and gradient associated with each data point $x^{(i)}, j^{(i)}$;}
 \begin{lstlisting}[language=Matlab, caption=Compute linear responses and activation for data point j.]
     % Compute linear responses and activation for data point j
-    %%% TODO ^^^
     y = logistic(obj,X(j,:));
 \end{lstlisting}
 ~\\
 {\bf (3) a gradient step on the parameters θ;}
 \begin{lstlisting}[language=Matlab, caption=Compute gradient.]
     % Compute gradient:
-    %%% TODO ^^^
     gradient = X1(j,:) * (y - Y(j)) + 2 * reg * obj.wts;
 
     obj.wts = obj.wts - step * gradient;      % take a step down the gradient
@@ -424,7 +421,6 @@ while (~done)
 {\bf (4) a stopping criterion (usually either stopIter iterations or that J has not changed by more than stopTol since the last iteration through all the data).}
 \begin{lstlisting}[language=Matlab, caption=Implement stopping criterion.]
   %   done = false;
-  %%% TODO: Check for stopping conditions
   deltaJ = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * obj.wts * obj.wts');  
   if (iter == stopIter || abs(deltaJ - Jsur(iter)) < stopTol)
     done = true;
@@ -489,7 +485,6 @@ iter=1; Jsur=zeros(1,stopIter); J01=zeros(1,stopIter); done=0;
 while (~done) 
   step = stepsize/iter;               % update step-size and evaluate current loss values
   Jsur(iter) = inf;   
-  %%% TODO: compute surrogate (neg log likelihood) loss
   wtsTrans = (obj.wts * obj.wts')';
   Jsur(iter) = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * sum(wtsTrans));
   J01(iter) = err(obj, X, Yin);
@@ -503,11 +498,9 @@ while (~done)
 
   for j=1:n,
     % Compute linear responses and activation for data point j
-    %%% TODO ^^^
     y = logistic(obj,X(j,:));
 
     % Compute gradient:
-    %%% TODO ^^^
     gradient = X1(j,:) * (y - Y(j)) + 2 * reg * obj.wts;
 
     obj.wts = obj.wts - step * gradient;      % take a step down the gradient
@@ -515,7 +508,6 @@ while (~done)
 
 
   %   done = false;
-  %%% TODO: Check for stopping conditions
   deltaJ = mean(-Y .* log(logistic(obj, X)) - (1 - Y) .* log(1 - logistic(obj, X)) + reg * obj.wts * obj.wts');  
   if (iter == stopIter || abs(deltaJ - Jsur(iter)) < stopTol)
     done = true;
