@@ -57,32 +57,32 @@ $$\frac{\partial L}{\partial w_j}(\sum_{i=1}^{N}log(1+e^{y_i(w^Tx_i+b)}))+2\lamb
 
 Using the chain rule,
 
-$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(1+e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w_jx_{i,j}+b)}}+2\lambda w_j$$
+$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(1+e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w^Tx_{i,j}+b)}}+2\lambda w_j$$
 
-$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(1)+\frac{\partial L}{\partial w_j}(e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w_jx_{i,j}+b)}}+2\lambda w_j$$
+$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(1)+\frac{\partial L}{\partial w_j}(e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w^Tx_{i,j}+b)}}+2\lambda w_j$$
 
-$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w_jx_{i,j}+b)}}+2\lambda w_j$$
+$$\sum_{i=1}^{N}\frac{\frac{\partial L}{\partial w_j}(e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w^Tx_{i,j}+b)}}+2\lambda w_j$$
 
 Using the chain rule again,
 
-$$\sum_{i=1}^{N}\frac{y_ix_ie^{y_i(w^Tx_i+b)}}{1+e^{y_i(w_jx_{i,j}+b)}}+2\lambda w_j$$
+$$\sum_{i=1}^{N}\frac{y_ix_ie^{y_i(w^Tx_i+b)}}{1+e^{y_i(w^Tx_{i,j}+b)}}+2\lambda w_j$$
 
 \section{Finding the Second Partial Derivative}
 Finding the second partial derivative $$\frac{\partial^2 L}{\partial w_j\partial w_k}$$
 
-$$\frac{\partial^2 L}{\partial w_j\partial w_k}=\frac{\partial}{\partial w_k}(\sum_{i=1}^{N}\frac{y_ix_ie^{y_i(w^Tx_i+b)}}{1+e^{y_i(w_jx_{i,j}+b)}}+2\lambda w_j)$$
+$$\frac{\partial^2 L}{\partial w_j\partial w_k}=\frac{\partial}{\partial w_k}(\sum_{i=1}^{N}\frac{y_ix_ie^{y_i(w^Tx_i+b)}}{1+e^{y_i(w^Tx_{i,j}+b)}}+2\lambda w_j)$$
 
-$$\frac{\partial}{\partial w_k}(\sum_{i=1}^{N}\frac{y_ix_ie^{y_i(w^Tx_i+b)}}{1+e^{y_i(w_jx_{i,j}+b)}})$$
 
-$$\sum_{i=1}^{N}\frac{y_ix_i(\frac{\partial}{\partial w_k}e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w_jx_{i,j}+b)}}$$
+$$\sum_{i=1}^{N}\frac{y_ix_i(\frac{\partial}{\partial w_k}e^{y_i(w^Tx_i+b)})}{1+e^{y_i(w^Tx_{i,j}+b)}}$$
 
 Using the chain rule,
 
-$$\sum_{i=1}^{N}\frac{e^{y_i(w_kx_i+b)}y_i^2x_i(\frac{\partial}{\partial w_k}(w^Tx_i+b))}{1+e^{y_i(w_jx_{i,j}+b)}}$$
+$$\sum_{i=1}^{N}\frac{e^{y_i(w_kx_i+b)}y_i^2x_i(\frac{\partial}{\partial w_k}(w^Tx_i+b))}{1+e^{y_i(w^Tx_{i,j}+b)}}$$
 
-$$\sum_{i=1}^{N}\frac{e^{y_i(w^Tx_i+b)}y_i^2x_iw_kx_i+b}{1+e^{y_i(w_jx_{i,j}+b)}}$$
+$$\sum_{i=1}^{N}\frac{e^{y_i(w^Tx_i+b)}y_i^2x_iw_kx_i+b}{1+e^{y_i(w^Tx_{i,j}+b)}}$$
 
-$$\sum_{i=1}^{N}\frac{e^{y_i(w^Tx_i+b)}y_i^2x_i^2w_k+b}{1+e^{y_i(w_jx_{i,j}+b)}}$$
+$$\sum_{i=1}^{N}\frac{e^{y_i(w^Tx_i+b)}y_i^2x_i^2w_k+b}{1+e^{y_i(w^Tx_{i,j}+b)}}$$
+
 
 \section{Proving it's a convex function}
 
@@ -94,10 +94,7 @@ Where,
 
 $$H_{j,k}=\frac{\partial^2L}{\partial w_j\partial w_k}$$
 
-Using proof by contradiction, 
-
-
-
+This could be shown using a proof by contradiction.
 
 \chapter{Practice}
 
@@ -289,7 +286,6 @@ function plot2DLinear(obj, X, Y)
 [n,d] = size(X);
 if (d~=2) error('Sorry -- plot2DLogistic only works on 2D data...'); end;
 
-%%% TODO: Fill in the rest of this function...
 figure('Name','Linear Plot');
 hold on;
 
